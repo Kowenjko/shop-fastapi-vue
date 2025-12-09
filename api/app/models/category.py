@@ -12,12 +12,8 @@ if TYPE_CHECKING:
 class Category(Base):
     __tablename__ = "categories"
 
-    name: Mapped[str] = mapped_column(
-        String(100), unique=False, nullable=False, index=True
-    )
-    slug: Mapped[str] = mapped_column(
-        String(100), unique=False, nullable=False, index=True
-    )
+    name: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
+    slug: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
 
     products: Mapped[list["Product"]] = relationship(
         secondary=category_product_association,

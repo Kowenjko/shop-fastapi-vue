@@ -1,6 +1,5 @@
 from typing import TYPE_CHECKING
-
-from sqlalchemy import String, Text, Integer, Float, ForeignKey
+from sqlalchemy import String, Text, Float
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from datetime import datetime
 from sqlalchemy import func
@@ -13,18 +12,13 @@ if TYPE_CHECKING:
 
 class Product(Base):
 
-    name: Mapped[str] = mapped_column(
-        String(100), unique=False, nullable=False, index=True
-    )
+    name: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     description: Mapped[str] = mapped_column(Text, default="", server_default="")
     price: Mapped[float] = mapped_column(Float, default=0.0, server_default="0.0")
-    category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))
-    image_url: Mapped[str]
-    created_at: Mapped[datetime] = mapped_column(
-        server_default=func.now(), default=datetime.utcnow
-    )
+    image_url: Mapped[str] = mapped_column(String(255))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
-    category: Mapped[list["Category"]] = relationship(
+    categories: Mapped[list["Category"]] = relationship(
         secondary=category_product_association,
         back_populates="products",
     )
