@@ -9,10 +9,10 @@ class CartService:
     def __init__(self, session: AsyncSession):
         self.product_repository = ProductRepository(session)
 
-    def add_to_cart(
+    async def add_to_cart(
         self, cart_data: Dict[int, int], item: CartItemCreate
     ) -> Dict[int, int]:
-        product = self.product_repository.get_by_id(item.product_id)
+        product = await self.product_repository.get_by_id(item.product_id)
         if not product:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -26,7 +26,7 @@ class CartService:
 
         return cart_data
 
-    def update_cart_item(
+    async def update_cart_item(
         self, cart_data: Dict[int, int], item: CartItemUpdate
     ) -> Dict[int, int]:
         if item.product_id not in cart_data:
@@ -38,7 +38,7 @@ class CartService:
         cart_data[item.product_id] = item.quantity
         return cart_data
 
-    def remove_from_cart(
+    async def remove_from_cart(
         self, cart_data: Dict[int, int], product_id: int
     ) -> Dict[int, int]:
         if product_id not in cart_data:
@@ -50,12 +50,12 @@ class CartService:
         del cart_data[product_id]
         return cart_data
 
-    def get_cart_details(self, cart_data: Dict[int, int]) -> CartResponse:
+    async def get_cart_details(self, cart_data: Dict[int, int]) -> CartResponse:
         if not cart_data:
             return CartResponse(items=[], total=0.0, items_count=0)
 
         product_ids = list(cart_data.keys())
-        products = self.product_repository.get_multiple_by_ids(product_ids)
+        products = await self.product_repository.get_multiple_by_ids(product_ids)
         products_dict = {product.id: product for product in products}
 
         cart_items = []
@@ -81,5 +81,5 @@ class CartService:
                 total_items += quantity
 
         return CartResponse(
-            items=cart_items, total=round(total_price), items_count=total_items
+            items=cart_items, total=round(total_price, 2), items_count=total_items
         )
