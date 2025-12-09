@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
 from ..models.product import Product
 from ..schemas.product import ProductCreate
 
 class ProductRepository:
-    def __init__(self, db: Session):
-        self.db = db
+    def __init__(self, session: AsyncSession):
+        self.db = session
 
     def get_all(self) -> List[Product]:
         return self.db.query(Product).options(joinedload(Product.category)).all()

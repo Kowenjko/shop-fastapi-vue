@@ -1,12 +1,12 @@
-from sqlalchemy.orm import Session
+
 from typing import List
 from ..repositories.category_repository import CategoryRepository
 from ..schemas.category import CategoryResponse, CategoryCreate
 from fastapi import HTTPException, status
-
+from sqlalchemy.ext.asyncio import AsyncSession
 class CategoryService:
-    def __init__(self, db: Session):
-        self.repository = CategoryRepository(db)
+    def __init__(self, session: AsyncSession):
+        self.repository = CategoryRepository(session)
 
     def get_all_categories(self) -> List[CategoryResponse]:
         categories = self.repository.get_all()

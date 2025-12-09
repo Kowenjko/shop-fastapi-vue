@@ -1,24 +1,25 @@
-from sqlalchemy.orm import Session
+
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
-from ..models.category import Category
-from ..schemas.category import CategoryCreate
+from app.models.category import Category
+from app.schemas.category import CategoryCreate
 
 class CategoryRepository:
-    def __init__(self, db: Session):
-        self.db = db
+    def __init__(self, session: AsyncSession):
+        self.db = session
 
-    def get_all(self) -> List[Category]:
-        return self.db.query(Category).all()
+    async def get_all(self) -> List[Category]:
+        return await self.db.query(Category).all()
 
-    def get_by_id(self, category_id: int) -> Optional[Category]:
-        return self.db.query(Category).filter(Category.id == category_id).first()
+    async def get_by_id(self, category_id: int) -> Optional[Category]:
+        return await self.db.query(Category).filter(Category.id == category_id).first()
 
-    def get_by_slug(self, slug: str) -> Optional[Category]:
-        return self.db.query(Category).filter(Category.slug == slug).first()
+    async def get_by_slug(self, slug: str) -> Optional[Category]:
+        return await self.db.query(Category).filter(Category.slug == slug).first()
 
-    def create(self, category_data: CategoryCreate) -> Category:
+    async def create(self, category_data: CategoryCreate) -> Category:
         db_category = Category(**category_data.model_dump())
         self.db.add(db_category)
-        self.db.commit()
-        self.db.refresh(db_category)
+        await self.db.commit()
+        await self.db.refresh(db_category)
         return db_category

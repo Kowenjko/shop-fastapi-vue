@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from .config import settings
-from .db_helper import init_db
+from app.config import settings
+from app.db_helper import db_helper
 from typing import AsyncGenerator
 
 from contextlib import asynccontextmanager
 
 from fastapi.responses import ORJSONResponse
-from .routes import products_router, categories_router, cart_router
+from app.routes import products_router, categories_router, cart_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     yield
     # shutdown
 
-    await init_db.dispose()
+    await db_helper.dispose()
 
 app = FastAPI(default_response_class=ORJSONResponse, lifespan=lifespan)
 

@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import (
     AsyncSession,
 )
 
-from .config import settings
+from app.config import settings
 
 
 class DatabaseHelper:
@@ -41,7 +41,7 @@ class DatabaseHelper:
             yield session
 
 
-init_db = DatabaseHelper(
+db_helper = DatabaseHelper(
     url=str(settings.db.url),
     echo=settings.db.echo,
     echo_pool=settings.db.echo_pool,

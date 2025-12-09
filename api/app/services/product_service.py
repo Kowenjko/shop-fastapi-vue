@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 from ..repositories.product_repository import ProductRepository
 from ..repositories.category_repository import CategoryRepository
@@ -6,9 +6,9 @@ from ..schemas.product import ProductResponse, ProductListResponse, ProductCreat
 from fastapi import HTTPException, status
 
 class ProductService:
-    def __init__(self, db: Session):
-        self.product_repository = ProductRepository(db)
-        self.category_repository = CategoryRepository(db)
+    def __init__(self, session: AsyncSession):
+        self.product_repository = ProductRepository(session)
+        self.category_repository = CategoryRepository(session)
 
     def get_all_products(self) -> ProductListResponse:
         products = self.product_repository.get_all()

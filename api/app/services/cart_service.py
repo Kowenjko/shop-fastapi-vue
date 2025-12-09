@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Dict
 from ..repositories.product_repository import ProductRepository
 from ..schemas.cart import CartResponse, CartItem, \
@@ -7,8 +7,8 @@ from fastapi import HTTPException, status
 
 
 class CartService:
-    def __init__(self, db: Session):
-        self.product_repository = ProductRepository(db)
+    def __init__(self, session: AsyncSession):
+        self.product_repository = ProductRepository(session)
 
     def add_to_cart(self, cart_data: Dict[int, int], item: CartItemCreate) -> Dict[int, int]:
         product = self.product_repository.get_by_id(item.product_id)
