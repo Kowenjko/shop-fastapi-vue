@@ -1,9 +1,10 @@
-
 from typing import List
 from ..repositories.category_repository import CategoryRepository
 from ..schemas.category import CategoryResponse, CategoryCreate
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+
+
 class CategoryService:
     def __init__(self, session: AsyncSession):
         self.repository = CategoryRepository(session)
@@ -17,7 +18,7 @@ class CategoryService:
         if not category:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f'Category with id {category_id} not found'
+                detail=f"Category with id {category_id} not found",
             )
         return CategoryResponse.model_validate(category)
 

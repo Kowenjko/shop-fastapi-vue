@@ -8,7 +8,8 @@ from typing import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi.responses import ORJSONResponse
-from app.routes import products_router, categories_router, cart_router
+from .routes import products_router, categories_router, cart_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -18,6 +19,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # shutdown
 
     await db_helper.dispose()
+
 
 app = FastAPI(default_response_class=ORJSONResponse, lifespan=lifespan)
 
