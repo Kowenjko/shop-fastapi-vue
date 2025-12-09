@@ -1,19 +1,22 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from .category import CategoryResponse
 
 
 class ProductBase(BaseModel):
     name: str = Field(..., min_length=5, max_length=200, description="Product name")
     description: Optional[str] = Field(None, description="Product description")
-    price: float = Field(..., gt=0, description="Product price(must be greater than 0")
-    category_id: int = Field(..., description="Category ID")
+    price: float = Field(
+        ..., gt=0, description="Product price (must be greater than 0)"
+    )
     image_url: Optional[str] = Field(None, description="Product image URL")
 
 
 class ProductCreate(ProductBase):
-    pass
+    category_ids: List[int] = Field(
+        ..., description="List of category IDs for the product"
+    )
 
 
 class ProductResponse(BaseModel):
@@ -21,11 +24,12 @@ class ProductResponse(BaseModel):
     name: str
     description: Optional[str]
     price: float
-    category_id: int | None
     image_url: Optional[str]
     created_at: datetime
-    category: CategoryResponse | None = Field(
-        ..., description="Product category details"
+
+    # ← many-to-many
+    categories: List[CategoryResponse] = Field(
+        ..., description="List of categories this product belongs to"
     )
 
     class Config:
@@ -33,5 +37,5 @@ class ProductResponse(BaseModel):
 
 
 class ProductListResponse(BaseModel):
-    products: list[ProductResponse]
+    products: List[ProductResponse]
     total: int = Field(..., description="Total number of products")
