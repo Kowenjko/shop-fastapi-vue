@@ -6,7 +6,7 @@ from app.core.db_helper import db_helper
 from app.services.category_service import CategoryService
 from app.schemas.category import CategoryCreate, CategoryResponse
 
-router = APIRouter(prefix="/api/categories", tags=["Categories"])
+router = APIRouter(tags=["Categories"])
 
 
 @router.get("", response_model=List[CategoryResponse], status_code=status.HTTP_200_OK)

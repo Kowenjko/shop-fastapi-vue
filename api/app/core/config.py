@@ -2,14 +2,22 @@ from pydantic import PostgresDsn, BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List, Union
 
+
 class RunConfig(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8000
 
+
 class ApiPrefix(BaseModel):
     prefix: str = "/api"
-    
-class DatabaseConfig(BaseSettings):    
+    cart: str = "/cart"
+    categories: str = "/categories"
+    products: str = "/products"
+    docs: str = "/api/docs"
+    redoc: str = "/api/redoc"
+
+
+class DatabaseConfig(BaseSettings):
     url: PostgresDsn
     echo: bool = False
     echo_pool: bool = False
@@ -35,7 +43,7 @@ class Settings(BaseSettings):
 
     app_name: str = "FastAPI Shop"
     debug: bool = True
-    
+
     cors_origins: Union[List[str], str] = [
         "http://localhost:5173",
         "http://localhost:3000",
@@ -47,8 +55,6 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api: ApiPrefix = ApiPrefix()
     db: DatabaseConfig
-
-   
 
 
 settings = Settings()

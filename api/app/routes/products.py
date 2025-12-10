@@ -6,7 +6,7 @@ from app.core.db_helper import db_helper
 from app.services.product_service import ProductService
 from app.schemas.product import ProductResponse, ProductListResponse, ProductCreate
 
-router = APIRouter(prefix="/api/products", tags=["Products"])
+router = APIRouter(tags=["Products"])
 
 
 @router.get("", response_model=ProductListResponse, status_code=status.HTTP_200_OK)

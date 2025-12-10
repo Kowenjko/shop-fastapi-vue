@@ -8,7 +8,7 @@ from typing import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi.responses import ORJSONResponse
-from app.routes import products_router, categories_router, cart_router
+from app.routes import router as api_router
 
 
 @asynccontextmanager
@@ -26,8 +26,8 @@ app = FastAPI(
     default_response_class=ORJSONResponse,
     lifespan=lifespan,
     debug=settings.debug,
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
+    docs_url=settings.api.docs,
+    redoc_url=settings.api.redoc,
 )
 
 
@@ -41,9 +41,7 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory=settings.static_dir), name="static")
 
-app.include_router(products_router)
-app.include_router(categories_router)
-app.include_router(cart_router)
+app.include_router(api_router)
 
 
 @app.get("/")
