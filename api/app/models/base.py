@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, Mapped
 from sqlalchemy.orm import declared_attr, mapped_column
 
-from ..config import settings
+from app.core.config import settings
 from ..utils import camel_case_to_snake_case
 
 

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from typing import Annotated, List
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db_helper import db_helper
+from app.core.db_helper import db_helper
 from app.services.category_service import CategoryService
 from app.schemas.category import CategoryCreate, CategoryResponse
 

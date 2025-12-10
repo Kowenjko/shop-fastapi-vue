@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db_helper import db_helper
+from app.core.db_helper import db_helper
 from app.services.product_service import ProductService
 from app.schemas.product import ProductResponse, ProductListResponse, ProductCreate
 

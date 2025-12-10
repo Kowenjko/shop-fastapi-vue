@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated, Dict
 
-from app.db_helper import db_helper
+from app.core.db_helper import db_helper
 from app.services.cart_service import CartService
 from app.schemas.cart import CartItemCreate, CartItemUpdate, CartResponse
 from pydantic import BaseModel
