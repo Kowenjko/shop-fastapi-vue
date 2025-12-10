@@ -7,7 +7,7 @@ from app.services.cart_service import CartService
 from app.schemas.cart import CartItemCreate, CartItemUpdate, CartResponse
 from pydantic import BaseModel
 
-router = APIRouter(prefix="/api/cart", tags=["cart"])
+router = APIRouter(prefix="/api/cart", tags=["Cart"])
 
 
 class AddToCartRequest(BaseModel):

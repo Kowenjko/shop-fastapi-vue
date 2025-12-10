@@ -27,10 +27,6 @@ class ProductRepository:
         return result.scalar_one_or_none()
 
     async def get_by_category(self, category_id: int) -> List[Product]:
-        """
-        оскільки тепер many-to-many,
-        фільтруємо через association table
-        """
         stmt = (
             select(Product)
             .options(joinedload(Product.category))
