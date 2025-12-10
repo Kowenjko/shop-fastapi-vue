@@ -84,7 +84,7 @@ export const useCartStore = defineStore('cart', () => {
 
     loading.value = true
     try {
-      const response = await cartAPI.getCart(cartItems.value)
+      const response = await cartAPI.getCart({ cart: cartItems.value })
       cartDetails.value = response.data
     } catch (err) {
       console.error('Error fetching cart details:', err)

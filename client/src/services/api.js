@@ -96,14 +96,12 @@ export const cartAPI = {
     })
   },
 
-  /**
+  /**s
    * Удалить товар из корзины
    */
   removeItem(productId, cartData) {
     return apiClient.delete(`/cart/remove/${productId}`, {
-      data: {
-        cart: cartData,
-      },
+      data: { cart: cartData },
     })
   },
 }

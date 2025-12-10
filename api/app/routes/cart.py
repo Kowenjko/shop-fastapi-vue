@@ -23,7 +23,6 @@ class UpdateCartRequest(BaseModel):
 
 
 class RemoveFromCartRequest(BaseModel):
-    product_id: int
     cart: Dict[int, int] = {}
 
 
