@@ -42,7 +42,7 @@ async def get_products_by_category(
 
 
 @router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
-async def create_category(
+async def create_product(
     product_data: ProductCreate,
     session: AsyncSession = Depends(db_helper.session_getter),
 ):

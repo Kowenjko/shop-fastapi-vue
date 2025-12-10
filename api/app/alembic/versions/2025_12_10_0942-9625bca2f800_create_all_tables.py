@@ -1,8 +1,8 @@
-"""all table
+"""create all tables
 
-Revision ID: 59dd9a92ec9e
+Revision ID: 9625bca2f800
 Revises:
-Create Date: 2025-12-09 13:31:21.436745
+Create Date: 2025-12-10 09:42:25.193971
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "59dd9a92ec9e"
+revision: str = "9625bca2f800"
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -37,14 +37,14 @@ def upgrade() -> None:
         sa.Column("name", sa.String(length=100), nullable=False),
         sa.Column("description", sa.Text(), server_default="", nullable=False),
         sa.Column("price", sa.Float(), server_default="0.0", nullable=False),
-        sa.Column("category_id", sa.Integer(), nullable=False),
-        sa.Column("image_url", sa.String(), nullable=False),
+        sa.Column("image_url", sa.String(length=255), nullable=False),
         sa.Column(
             "created_at",
             sa.DateTime(),
             server_default=sa.text("now()"),
             nullable=False,
         ),
+        sa.Column("category_id", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(
             ["category_id"],
             ["categories.id"],

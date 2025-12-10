@@ -12,7 +12,7 @@ class ProductRepository:
 
     async def get_all(self) -> List[Product]:
         stmt = (
-            select(Product).options(joinedload(Product.categories)).order_by(Product.id)
+            select(Product).options(joinedload(Product.category)).order_by(Product.id)
         )
         result = await self.session.execute(stmt)
         return result.scalars().all()
@@ -20,7 +20,7 @@ class ProductRepository:
     async def get_by_id(self, product_id: int) -> Optional[Product]:
         stmt = (
             select(Product)
-            .options(joinedload(Product.categories))
+            .options(joinedload(Product.category))
             .filter(Product.id == product_id)
         )
         result = await self.session.execute(stmt)
@@ -33,8 +33,7 @@ class ProductRepository:
         """
         stmt = (
             select(Product)
-            .join(Product.categories)
-            .options(joinedload(Product.categories))
+            .options(joinedload(Product.category))
             .filter_by(id=category_id)
         )
         result = await self.session.execute(stmt)
@@ -50,7 +49,7 @@ class ProductRepository:
     async def get_multiple_by_ids(self, product_ids: List[int]) -> List[Product]:
         stmt = (
             select(Product)
-            .options(joinedload(Product.categories))
+            .options(joinedload(Product.category))
             .filter(Product.id.in_(product_ids))
         )
         result = await self.session.execute(stmt)
