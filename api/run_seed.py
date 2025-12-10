@@ -5,16 +5,6 @@ from app.seed.products import seed_products
 
 
 async def seed_all():
-    # Берём фабрику сессий (асинхронно)
-    async_session_maker = db_helper.session_factory
-
-    print("🚀 Starting database seed...")
-
-    async with async_session_maker() as session:
-        await seed_categories(session)
-
-    print("🎉 Seeding complete!")
-
     try:
         # Берём фабрику сессий (асинхронно)
         async_session_maker = db_helper.session_factory
