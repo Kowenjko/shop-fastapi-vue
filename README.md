@@ -89,29 +89,28 @@ project-root/
 
 ```bash
 make dev-certs
+```
 
 2️⃣ Запуск dev окружения:
 
 ```bash
 make dev
 ```
-
 Frontend: https://shop.local
 Backend: https://api.shop.local
-
 3️⃣ Миграции базы данных:
-
+```bash
 make revision msg="create users table"
 make migrate
-
+```
 4️⃣ Seed базы:
-
+```bash
 make seed
-
+```
 5️⃣ Остановка окружения:
-
+```bash
 make down
-
+```
 
 
 
