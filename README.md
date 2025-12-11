@@ -7,6 +7,9 @@
 
 Современный, масштабируемый интернет-магазин с REST API на FastAPI и SPA frontend на Vue.js 3
 
+DEV - docker compose up --build
+PROD - docker compose -f docker-compose.prod.yml up --build -d
+
 </div>
 
 ---
@@ -43,7 +46,7 @@
 ```
 fastapi-shop/
 │
-├── backend/                      # Backend часть (FastAPI)
+├── api/                      # Backend часть (FastAPI)
 │   ├── app/
 │   │   ├── models/              # SQLAlchemy модели БД
 │   │   │   ├── category.py     # Модель категорий
@@ -78,7 +81,7 @@ fastapi-shop/
 │   ├── run.py                   # Скрипт запуска сервера
 │   └── seed_data.py            # Заполнение БД тестовыми данными
 │
-├── frontend/                     # Frontend часть (Vue.js 3)
+├── client/                     # Frontend часть (Vue.js 3)
 │   ├── src/
 │   │   ├── components/          # Vue компоненты
 │   │   │   ├── CartItem.vue    # Элемент корзины

@@ -1,0 +1,33 @@
+# Общие
+.git
+.gitignore
+.env
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdm
+.venv/
+dist/
+build/
+
+# Node/Vue
+node_modules/
+client/node_modules/
+*.log
+dist/
+.cache/
+.yarn
+
+# Docker
+docker/api/.venv
+docker/client/node_modules
+docker-compose.override.yml
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
