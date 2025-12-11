@@ -18,7 +18,7 @@ project-root/
 │ ├── run_seed.py # Сидинг базы
 │ ├── alembic.ini # Конфигурация Alembic
 │ └── app/
-│ └── alembic/ # Миграции
+│       └── alembic/ # Миграции
 │
 ├── client/ # Frontend (Vue 3)
 │
