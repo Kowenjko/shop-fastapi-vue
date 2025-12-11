@@ -14,14 +14,16 @@
 
 ```bash
 # Установка зависимостей
-cd backend
-pip install -r requirements.txt
+cd api
+pip install --upgrade pip wheel "uv"
+
+uv sync
 
 # Заполнение базы данных тестовыми данными
-python seed_data.py
+uv run python run_seed.py
 
 # Запуск сервера
-python run.py
+uv run python run.py
 ```
 
 Сервер будет доступен по адресу: `https://api.shop.local`
