@@ -17,10 +17,18 @@ export default defineConfig({
     },
   },
   server: {
+    host: '0.0.0.0',
     port: 5173,
+    strictPort: true,
+
+    hmr: {
+      host: 'shop.local', // указываем домен для HMR
+      protocol: 'ws',
+      port: 5173,
+    },
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://api.shop.local',
         changeOrigin: true,
       },
     },

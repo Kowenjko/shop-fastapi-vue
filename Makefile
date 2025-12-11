@@ -3,6 +3,9 @@ SHELL := /bin/bash
 DEV_COMPOSE = docker compose
 API = $(DEV_COMPOSE) exec api
 
+CLIENT_URL = shop.local
+API_URL = api.shop.local
+
 # --------------------------
 # DEV COMMANDS
 # --------------------------
@@ -32,18 +35,18 @@ clean:
 # --------------------------
 
 certs:
-	mkdir -p certs
+	mkdir -p nginx/certs
 	openssl req -x509 -nodes -days 365 \
 		-newkey rsa:2048 \
-		-keyout certs/shop.local.key \
-		-out certs/shop.local.crt \
-		-subj "/CN=shop.local"
+		-keyout nginx/certs/$(CLIENT_URL).key \
+		-out nginx/certs/$(CLIENT_URL).crt \
+		-subj "/CN=$(CLIENT_URL)"
 
 	openssl req -x509 -nodes -days 365 \
 		-newkey rsa:2048 \
-		-keyout certs/api.shop.local.key \
-		-out certs/api.shop.local.crt \
-		-subj "/CN=api.shop.local"
+		-keyout nginx/certs/$(API_URL).key \
+		-out nginx/certs/$(API_URL).crt \
+		-subj "/CN=$(API_URL)"
 
 
 # --------------------------
