@@ -11,10 +11,10 @@ dev:
 	$(DEV_COMPOSE) up --build
 
 down:
-	$(DEV_COMPOSE) down -d
+	$(DEV_COMPOSE) down
 
 up:
-	$(DEV_COMPOSE) up
+	$(DEV_COMPOSE) up -d
 
 restart:
 	$(DEV_COMPOSE) down
