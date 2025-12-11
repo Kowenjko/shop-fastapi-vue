@@ -24,7 +24,7 @@ python seed_data.py
 python run.py
 ```
 
-Сервер будет доступен по адресу: `http://localhost:8000`
+Сервер будет доступен по адресу: `https://api.shop.local`
 
 ### Импорт коллекции в Postman
 
@@ -44,7 +44,7 @@ python run.py
 
 | Variable | Initial Value | Current Value |
 |----------|--------------|---------------|
-| `base_url` | `http://localhost:8000` | `http://localhost:8000` |
+| `base_url` | `https://api.shop.local` | `https://api.shop.local` |
 | `product_id` | `1` | `1` |
 | `category_id` | `1` | `1` |
 
