@@ -92,7 +92,9 @@ make dev-certs
 
 2️⃣ Запуск dev окружения:
 
+```bash
 make dev
+```
 
 Frontend: https://shop.local
 Backend: https://api.shop.local
