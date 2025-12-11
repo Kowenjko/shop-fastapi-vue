@@ -10,6 +10,7 @@
 
 ## 📁 Структура проекта
 
+```bash
 project-root/
 │
 ├── api/ # Backend (FastAPI)
@@ -33,6 +34,7 @@ project-root/
 │
 ├── docker-compose.yaml
 └── Makefile # Dev команды, миграции, seed и HTTPS
+```
 
 ## ⚡ Dev окружение с HTTPS
 
@@ -98,6 +100,7 @@ make dev
 ```
 Frontend: https://shop.local
 Backend: https://api.shop.local
+
 3️⃣ Миграции базы данных:
 ```bash
 make revision msg="create users table"
