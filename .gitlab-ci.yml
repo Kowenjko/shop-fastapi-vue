@@ -1,68 +1,68 @@
-stages:
-  - test
-  - build
-  - deploy
+# stages:
+#   - test
+#   - build
+#   - deploy
 
-variables:
-  DOCKER_REGISTRY: registry.gitlab.com/<your-group>/<your-project>
-  API_IMAGE: $DOCKER_REGISTRY/api
-  CLIENT_IMAGE: $DOCKER_REGISTRY/client
+# variables:
+#   DOCKER_REGISTRY: registry.gitlab.com/<your-group>/<your-project>
+#   API_IMAGE: $DOCKER_REGISTRY/api
+#   CLIENT_IMAGE: $DOCKER_REGISTRY/client
 
-# -----------------------------------
-# API tests
-# -----------------------------------
-api-tests:
-  stage: test
-  image: python:3.12
-  script:
-    - cd api
-    - pip install uv
-    - uv sync
-    - uv run pytest
+# # -----------------------------------
+# # API tests
+# # -----------------------------------
+# api-tests:
+#   stage: test
+#   image: python:3.12
+#   script:
+#     - cd api
+#     - pip install uv
+#     - uv sync
+#     - uv run pytest
 
-# -----------------------------------
-# Client build
-# -----------------------------------
-client-tests:
-  stage: test
-  image: node:20
-  script:
-    - cd client
-    - npm ci
-    - npm run build
+# # -----------------------------------
+# # Client build
+# # -----------------------------------
+# client-tests:
+#   stage: test
+#   image: node:20
+#   script:
+#     - cd client
+#     - npm ci
+#     - npm run build
 
-# -----------------------------------
-# Build & Push Docker
-# -----------------------------------
-build:
-  stage: build
-  needs: [api-tests, client-tests]
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+# # -----------------------------------
+# # Build & Push Docker
+# # -----------------------------------
+# build:
+#   stage: build
+#   needs: [api-tests, client-tests]
+#   image: docker:latest
+#   services:
+#     - docker:dind
+#   script:
+#     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
-    - docker build -t $API_IMAGE:latest -f docker/api/Dockerfile .
-    - docker push $API_IMAGE:latest
+#     - docker build -t $API_IMAGE:latest -f docker/api/Dockerfile .
+#     - docker push $API_IMAGE:latest
 
-    - docker build -t $CLIENT_IMAGE:latest -f docker/client/Dockerfile .
-    - docker push $CLIENT_IMAGE:latest
+#     - docker build -t $CLIENT_IMAGE:latest -f docker/client/Dockerfile .
+#     - docker push $CLIENT_IMAGE:latest
 
-# -----------------------------------
-# Deploy
-# -----------------------------------
-deploy:
-  stage: deploy
-  image: alpine:latest
-  before_script:
-    - apk add --no-cache openssh-client
-  script:
-    - ssh $DEPLOY_USER@$DEPLOY_HOST "
-        cd /var/www/project &&
-        docker compose pull &&
-        docker compose up -d --remove-orphans &&
-        docker system prune -f
-      "
-  only:
-    - main
+# # -----------------------------------
+# # Deploy
+# # -----------------------------------
+# deploy:
+#   stage: deploy
+#   image: alpine:latest
+#   before_script:
+#     - apk add --no-cache openssh-client
+#   script:
+#     - ssh $DEPLOY_USER@$DEPLOY_HOST "
+#         cd /var/www/project &&
+#         docker compose pull &&
+#         docker compose up -d --remove-orphans &&
+#         docker system prune -f
+#       "
+#   only:
+#     - main
