@@ -62,7 +62,7 @@
 
             <!-- Счетчик товаров -->
             <span
-              v-if="cartStore.itemsCount > 0"
+              v-if="cartStore?.itemsCount && cartStore.itemsCount > 0"
               class="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
             >
               {{ cartStore.itemsCount }}
@@ -74,7 +74,7 @@
   </header>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { useCartStore } from '@/stores/cart'
 
 const cartStore = useCartStore()

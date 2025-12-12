@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import Header from '@/components/Header.vue'
