@@ -6,11 +6,7 @@ export interface ProductI {
   category_id: number
   image_url: string
   created_at: string
-  category: {
-    name: string
-    slug: string
-    id: number
-  }
+  category: CategoryI
 }
 
 export interface CreateProductI {
@@ -24,4 +20,10 @@ export interface CreateProductI {
 export interface AllProductI {
   products: ProductI[]
   total: number
+}
+
+export interface CategoryI {
+  id?: number
+  name: string
+  slug: string
 }

@@ -1,4 +1,8 @@
 export interface CartI {
+  number: number
+}
+
+export interface ResponseCartI {
   items: [
     {
       product_id: number
@@ -16,5 +20,5 @@ export interface CartI {
 export interface AddToCartI {
   product_id: number
   quantity: number
-  cart: { number: number }
+  cart: CartI
 }
