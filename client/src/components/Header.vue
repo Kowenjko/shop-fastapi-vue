@@ -37,6 +37,13 @@
           >
             Catalog
           </router-link>
+          <router-link
+            to="/about"
+            class="text-gray-700 hover:text-black transition-colors font-medium"
+            active-class="text-black font-semibold"
+          >
+            About
+          </router-link>
 
           <!-- Корзина -->
           <router-link

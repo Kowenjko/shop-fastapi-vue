@@ -93,7 +93,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { onMounted } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import ProductCard from '@/components/ProductCard.vue'
