@@ -9,7 +9,7 @@ from app.schemas.category import CategoryCreate, CategoryResponse
 router = APIRouter(tags=["Categories"])
 
 
-@router.get("", response_model=List[CategoryResponse], status_code=status.HTTP_200_OK)
+@router.get("/", response_model=List[CategoryResponse], status_code=status.HTTP_200_OK)
 async def get_categories(
     session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
 ):
@@ -18,7 +18,7 @@ async def get_categories(
 
 
 @router.get(
-    "/{category_id}", response_model=CategoryResponse, status_code=status.HTTP_200_OK
+    "/{category_id}/", response_model=CategoryResponse, status_code=status.HTTP_200_OK
 )
 async def get_category(
     category_id: int,

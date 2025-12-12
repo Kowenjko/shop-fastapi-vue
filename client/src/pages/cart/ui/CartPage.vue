@@ -110,10 +110,10 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '@/features/cart'
 import CartItem from '@/components/CartItem.vue'
 
 const router = useRouter()

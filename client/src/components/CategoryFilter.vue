@@ -49,9 +49,9 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed } from 'vue'
-import { useProductsStore } from '@/stores/products'
+import { useProductsStore } from '@/entities/product'
 
 const productsStore = useProductsStore()
 

@@ -120,11 +120,11 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useProductsStore } from '@/stores/products'
-import { useCartStore } from '@/stores/cart'
+import { useProductsStore } from '@/entities/product'
+import { useCartStore } from '@/features/cart'
 
 const route = useRoute()
 const router = useRouter()

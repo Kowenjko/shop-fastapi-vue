@@ -5,14 +5,14 @@ import type { CartI, AddToCartI, ResponseCartI } from '../model'
 
 export const cartAPI = {
   async addItem(item: AddToCartI, cartData: CartI) {
-    return await apiClient.post<CartI>(CART + ADD, {
+    return await apiClient.post<{ cart: CartI }>(CART + ADD, {
       product_id: item.product_id,
       quantity: item.quantity,
       cart: cartData,
     })
   },
 
-  async getCart(cartData: CartI) {
+  async getCart(cartData: { cart: CartI }) {
     return await apiClient.post<ResponseCartI>(CART, cartData)
   },
 
@@ -25,7 +25,7 @@ export const cartAPI = {
   },
 
   async removeItem(productId: number, cartData: CartI) {
-    return await apiClient.delete(CART + REMOVE + productId, {
+    return await apiClient.delete(CART + REMOVE + productId + '/', {
       data: { cart: cartData },
     })
   },

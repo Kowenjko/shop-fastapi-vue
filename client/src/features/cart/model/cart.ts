@@ -1,18 +1,20 @@
 export interface CartI {
-  number: number
+  [productId: number]: number
 }
 
 export interface ResponseCartI {
-  items: [
-    {
-      product_id: number
-      name: string
-      price: number
-      quantity: number
-      subtotal: number
-      image_url: string
-    },
-  ]
+  items:
+    | [
+        {
+          product_id: number
+          name: string
+          price: number
+          quantity: number
+          subtotal: number
+          image_url: string
+        },
+      ]
+    | []
   total: number
   items_count: number
 }
@@ -20,5 +22,5 @@ export interface ResponseCartI {
 export interface AddToCartI {
   product_id: number
   quantity: number
-  cart: CartI
+  cart?: CartI
 }

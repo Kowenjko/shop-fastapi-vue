@@ -1,20 +1,15 @@
-// frontend/src/stores/products.js
-/**
- * Pinia store для управления состоянием товаров.
- * Хранит список товаров, информацию о фильтрации и состояние загрузки.
- */
-
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { productsAPI, categoriesAPI } from '@/services/api'
+import { productsAPI, categoriesAPI } from '@/entities/product'
+import type { ProductI, CategoryI } from '@/entities/product'
 
 export const useProductsStore = defineStore('products', () => {
   // State
-  const products = ref([])
-  const categories = ref([])
-  const selectedCategory = ref(null)
+  const products = ref<ProductI[]>([])
+  const categories = ref<CategoryI[]>([])
+  const selectedCategory = ref<number | null>(null)
   const loading = ref(false)
-  const error = ref(null)
+  const error = ref<string | null>(null)
 
   // Getters
   const filteredProducts = computed(() => {
@@ -30,11 +25,12 @@ export const useProductsStore = defineStore('products', () => {
   /**
    * Загрузить все товары с сервера
    */
-  async function fetchProducts() {
+  const fetchProducts = async () => {
     loading.value = true
     error.value = null
     try {
       const response = await productsAPI.getAll()
+      console.log(response)
       products.value = response.data.products
     } catch (err) {
       error.value = 'Failed to load products'
@@ -47,7 +43,7 @@ export const useProductsStore = defineStore('products', () => {
   /**
    * Загрузить товар по ID
    */
-  async function fetchProductById(id) {
+  const fetchProductById = async (id: number) => {
     loading.value = true
     error.value = null
     try {
@@ -65,7 +61,7 @@ export const useProductsStore = defineStore('products', () => {
   /**
    * Загрузить все категории
    */
-  async function fetchCategories() {
+  const fetchCategories = async () => {
     try {
       const response = await categoriesAPI.getAll()
       categories.value = response.data
@@ -77,14 +73,14 @@ export const useProductsStore = defineStore('products', () => {
   /**
    * Установить фильтр по категории
    */
-  function setCategory(categoryId) {
+  const setCategory = (categoryId: number) => {
     selectedCategory.value = categoryId
   }
 
   /**
    * Сбросить фильтр категории
    */
-  function clearCategoryFilter() {
+  const clearCategoryFilter = () => {
     selectedCategory.value = null
   }
 

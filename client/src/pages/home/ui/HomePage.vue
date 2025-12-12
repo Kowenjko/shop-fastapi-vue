@@ -95,7 +95,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { useProductsStore } from '@/stores/products'
+import { useProductsStore } from '@/entities/product'
 import ProductCard from '@/components/ProductCard.vue'
 import CategoryFilter from '@/components/CategoryFilter.vue'
 

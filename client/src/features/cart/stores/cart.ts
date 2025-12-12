@@ -1,20 +1,14 @@
-// frontend/src/stores/cart.js
-/**
- * Pinia store для управления корзиной покупок.
- * Хранит состояние корзины в localStorage и синхронизирует с backend.
- * Следует принципу Single Responsibility - отвечает только за логику корзины.
- */
-
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { cartAPI } from '@/services/api'
+import { cartAPI } from '@/features/cart'
+import type { CartI, ResponseCartI } from '@/features/cart'
 
 const CART_STORAGE_KEY = 'shopping_cart'
 
 export const useCartStore = defineStore('cart', () => {
   // State - храним корзину как объект {product_id: quantity}
-  const cartItems = ref({})
-  const cartDetails = ref(null)
+  const cartItems = ref<CartI>({})
+  const cartDetails = ref<ResponseCartI | null>(null)
   const loading = ref(false)
 
   // Getters
@@ -34,7 +28,7 @@ export const useCartStore = defineStore('cart', () => {
   /**
    * Инициализировать корзину из localStorage
    */
-  function initCart() {
+  const initCart = () => {
     const savedCart = localStorage.getItem(CART_STORAGE_KEY)
     if (savedCart) {
       try {
@@ -49,34 +43,14 @@ export const useCartStore = defineStore('cart', () => {
   /**
    * Сохранить корзину в localStorage
    */
-  function saveCart() {
+  const saveCart = () => {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems.value))
-  }
-
-  /**
-   * Добавить товар в корзину
-   */
-  async function addToCart(productId, quantity = 1) {
-    try {
-      const item = {
-        product_id: productId,
-        quantity: quantity,
-      }
-      const response = await cartAPI.addItem(item, cartItems.value)
-      cartItems.value = response.data.cart
-      saveCart()
-      await fetchCartDetails()
-      return true
-    } catch (err) {
-      console.error('Error adding to cart:', err)
-      return false
-    }
   }
 
   /**
    * Получить детальную информацию о корзине
    */
-  async function fetchCartDetails() {
+  const fetchCartDetails = async () => {
     if (!hasItems.value) {
       cartDetails.value = { items: [], total: 0, items_count: 0 }
       return
@@ -94,9 +68,29 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   /**
+   * Добавить товар в корзину
+   */
+  const addToCart = async (productId: number, quantity = 1) => {
+    try {
+      const item = {
+        product_id: productId,
+        quantity: quantity,
+      }
+      const response = await cartAPI.addItem(item, cartItems.value)
+      cartItems.value = response.data.cart
+      saveCart()
+      await fetchCartDetails()
+      return true
+    } catch (err) {
+      console.error('Error adding to cart:', err)
+      return false
+    }
+  }
+
+  /**
    * Обновить количество товара
    */
-  async function updateQuantity(productId, quantity) {
+  const updateQuantity = async (productId: number, quantity: number) => {
     if (quantity <= 0) {
       return removeFromCart(productId)
     }
@@ -120,7 +114,7 @@ export const useCartStore = defineStore('cart', () => {
   /**
    * Удалить товар из корзины
    */
-  async function removeFromCart(productId) {
+  const removeFromCart = async (productId: number) => {
     try {
       const response = await cartAPI.removeItem(productId, cartItems.value)
       cartItems.value = response.data.cart
@@ -136,7 +130,7 @@ export const useCartStore = defineStore('cart', () => {
   /**
    * Очистить корзину
    */
-  function clearCart() {
+  const clearCart = () => {
     cartItems.value = {}
     cartDetails.value = null
     localStorage.removeItem(CART_STORAGE_KEY)

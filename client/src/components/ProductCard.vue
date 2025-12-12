@@ -56,9 +56,9 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '@/features/cart'
 
 // Props
 const props = defineProps({

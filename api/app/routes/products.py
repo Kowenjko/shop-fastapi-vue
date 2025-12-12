@@ -9,7 +9,7 @@ from app.schemas.product import ProductResponse, ProductListResponse, ProductCre
 router = APIRouter(tags=["Products"])
 
 
-@router.get("", response_model=ProductListResponse, status_code=status.HTTP_200_OK)
+@router.get("/", response_model=ProductListResponse, status_code=status.HTTP_200_OK)
 async def get_products(
     session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
 ):
@@ -18,7 +18,7 @@ async def get_products(
 
 
 @router.get(
-    "/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK
+    "/{product_id}/", response_model=ProductResponse, status_code=status.HTTP_200_OK
 )
 async def get_product(
     product_id: int,
@@ -29,7 +29,7 @@ async def get_product(
 
 
 @router.get(
-    "/category/{category_id}",
+    "/category/{category_id}/",
     response_model=ProductListResponse,
     status_code=status.HTTP_200_OK,
 )
