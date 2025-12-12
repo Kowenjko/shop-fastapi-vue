@@ -7,7 +7,7 @@ export const ABOUT_LINK = {
 } as const satisfies RouteLocationRaw
 
 export const ABOUT_ROUTE = {
-  path: '/about',
+  path: 'about',
   name: ABOUT_LINK.name,
   meta: {
     title: 'About - page',

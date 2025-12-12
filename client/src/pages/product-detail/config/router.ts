@@ -7,7 +7,7 @@ export const PRODUCT_DETAIL_LINK = {
 } as const satisfies RouteLocationRaw
 
 export const PRODUCT_DETAILS_ROUTE = {
-  path: '/product/:id',
+  path: 'product/:id',
   name: PRODUCT_DETAIL_LINK.name,
   meta: {
     title: 'Product Details',

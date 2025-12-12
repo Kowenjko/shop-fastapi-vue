@@ -8,7 +8,7 @@ export const HOME_LINK = {
 } as const satisfies RouteLocationRaw
 
 export const HOME_ROUTE = {
-  path: '/',
+  path: '',
   name: HOME_LINK.name,
   meta: {
     title: 'Shop - Home',

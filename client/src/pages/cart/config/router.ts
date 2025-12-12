@@ -7,7 +7,7 @@ export const CART_LINK = {
 } as const satisfies RouteLocationRaw
 
 export const CART_ROUTE = {
-  path: '/cart',
+  path: 'cart',
   name: CART_LINK.name,
   meta: {
     title: 'Shopping Cart',

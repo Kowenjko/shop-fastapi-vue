@@ -1,8 +1,8 @@
-<!-- frontend/src/components/Header.vue -->
-<!--
-  Компонент шапки сайта.
-  Содержит логотип, навигацию и счетчик товаров в корзине.
--->
+<script lang="ts" setup>
+import { useCartStore } from '@/stores/cart'
+
+const cartStore = useCartStore()
+</script>
 
 <template>
   <header class="bg-white border-b-2 border-black sticky top-0 z-50">
@@ -34,13 +34,13 @@
             to="/"
             class="text-gray-700 hover:text-black transition-colors font-medium"
             active-class="text-black font-semibold"
+            exact-active-class="text-black font-semibold"
           >
             Catalog
           </router-link>
           <router-link
             to="/about"
             class="text-gray-700 hover:text-black transition-colors font-medium"
-            active-class="text-black font-semibold"
           >
             About
           </router-link>
@@ -49,7 +49,6 @@
           <router-link
             to="/cart"
             class="relative flex items-center space-x-2 text-gray-700 hover:text-black transition-colors font-medium"
-            active-class="text-black font-semibold"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +68,7 @@
 
             <!-- Счетчик товаров -->
             <span
-              v-if="cartStore?.itemsCount && cartStore.itemsCount > 0"
+              v-if="cartStore.itemsCount > 0"
               class="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
             >
               {{ cartStore.itemsCount }}
@@ -80,9 +79,3 @@
     </div>
   </header>
 </template>
-
-<script lang="ts" setup>
-import { useCartStore } from '@/stores/cart'
-
-const cartStore = useCartStore()
-</script>
