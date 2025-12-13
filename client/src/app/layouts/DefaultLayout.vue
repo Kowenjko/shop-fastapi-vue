@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import Header from '@/widgets/Header.vue'
-import Footer from '@/widgets/Footer.vue'
+import { AppFooter, AppHeader } from '@/widgets/app'
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50">
-    <Header />
+    <AppHeader />
     <RouterView />
-    <Footer />
+    <AppFooter />
   </div>
 </template>

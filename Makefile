@@ -19,10 +19,10 @@ down:
 up:
 	$(DEV_COMPOSE) up -d
 
-restart:
-	$(DEV_COMPOSE) down
-	$(DEV_COMPOSE) up --build
+res-dev: down dev
 
+restart: down up
+	
 logs:
 	$(DEV_COMPOSE) logs -f
 

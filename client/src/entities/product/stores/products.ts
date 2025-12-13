@@ -30,7 +30,6 @@ export const useProductsStore = defineStore('products', () => {
     error.value = null
     try {
       const response = await productsAPI.getAll()
-      console.log(response)
       products.value = response.data.products
     } catch (err) {
       error.value = 'Failed to load products'

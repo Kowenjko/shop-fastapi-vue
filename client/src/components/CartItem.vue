@@ -10,7 +10,7 @@
   >
     <div class="flex gap-6">
       <!-- Изображение товара -->
-      <div class="w-24 h-24 flex-shrink-0">
+      <div class="w-24 h-24 shrink-0">
         <img
           :src="item.image_url"
           :alt="item.name"
@@ -20,7 +20,7 @@
       </div>
 
       <!-- Информация о товаре -->
-      <div class="flex-grow">
+      <div class="grow">
         <h3 class="text-lg font-bold text-black mb-2">
           {{ item.name }}
         </h3>

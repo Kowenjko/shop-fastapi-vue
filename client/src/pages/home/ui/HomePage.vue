@@ -1,8 +1,17 @@
-<!-- frontend/src/views/HomePage.vue -->
-<!--
-  Главная страница с каталогом товаров.
-  Отображает список товаров и фильтр по категориям.
--->
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue'
+
+import { ProductCard, CategoryFilter, useProductsStore } from '@/entities/product'
+import { Modal } from '@/shared/ui'
+
+const productsStore = useProductsStore()
+
+onMounted(async () => {
+  await Promise.allSettled([productsStore.fetchProducts(), productsStore.fetchCategories()])
+})
+
+const modal = ref(true)
+</script>
 
 <template>
   <div class="min-h-screen bg-white">
@@ -15,12 +24,12 @@
 
       <div class="flex gap-8">
         <!-- Боковая панель с фильтром -->
-        <aside class="w-64 flex-shrink-0">
+        <aside class="w-64 shrink-0">
           <CategoryFilter />
         </aside>
 
         <!-- Основное содержимое -->
-        <main class="flex-grow">
+        <main class="grow">
           <!-- Информация о фильтрации -->
           <div class="mb-6 flex items-center justify-between">
             <p class="text-gray-700">
@@ -91,20 +100,6 @@
       </div>
     </div>
   </div>
+
+  <!-- <Modal v-model:open="modal"><span class="text-black">asfasdfsf</span></Modal> -->
 </template>
-
-<script lang="ts" setup>
-import { onMounted } from 'vue'
-import { useProductsStore } from '@/entities/product'
-import ProductCard from '@/components/ProductCard.vue'
-import CategoryFilter from '@/components/CategoryFilter.vue'
-
-const productsStore = useProductsStore()
-
-/**
- * Загрузить данные при монтировании компонента
- */
-onMounted(async () => {
-  await Promise.all([productsStore.fetchProducts(), productsStore.fetchCategories()])
-})
-</script>
