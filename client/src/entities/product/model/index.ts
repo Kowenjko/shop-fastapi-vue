@@ -1,1 +1,1 @@
-export * from '@/entities/product/model/product'
+export * from './product'

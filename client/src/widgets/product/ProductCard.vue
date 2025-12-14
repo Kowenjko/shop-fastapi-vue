@@ -1,15 +1,43 @@
-<!-- frontend/src/components/ProductCard.vue -->
-<!--
-  Компонент карточки товара для отображения в каталоге.
-  Показывает основную информацию о товаре и кнопку добавления в корзину.
--->
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { Button } from '@/shared/ui'
+import { useCartStore } from '@/features/cart'
+import type { ProductI } from '@/entities/product'
+
+import { links } from '@/app/router'
+
+const { product } = defineProps<{ product: ProductI }>()
+
+const cartStore = useCartStore()
+const adding = ref(false)
+const showNotification = ref(false)
+
+const handleAddToCart = async () => {
+  adding.value = true
+  const success = await cartStore.addToCart(product.id, 1)
+
+  if (success) {
+    showNotification.value = true
+    setTimeout(() => {
+      showNotification.value = false
+    }, 2000)
+  }
+
+  adding.value = false
+}
+
+const handleImageError = (event: Event) => {
+  const img = event.target as HTMLImageElement
+  img.src = 'https://via.placeholder.com/400x400?text=No+Image'
+}
+</script>
 
 <template>
   <div
     class="bg-white border-2 border-gray-200 rounded-lg overflow-hidden hover:border-black transition-all duration-300 hover:shadow-lg"
   >
     <!-- Изображение товара -->
-    <router-link :to="`/product/${product.id}`">
+    <router-link :to="{ ...links.PRODUCT_DETAIL_LINK, params: { id: product.id } }">
       <div class="aspect-square overflow-hidden bg-gray-100">
         <img
           :src="product.image_url"
@@ -28,7 +56,7 @@
       </div>
 
       <!-- Название товара -->
-      <router-link :to="`/product/${product.id}`">
+      <router-link :to="{ ...links.PRODUCT_DETAIL_LINK, params: { id: product.id } }">
         <h3 class="text-lg font-semibold text-black mb-2 hover:text-gray-700 transition-colors">
           {{ product.name }}
         </h3>
@@ -37,75 +65,13 @@
       <!-- Цена -->
       <p class="text-2xl font-bold text-black mb-4">${{ product.price.toFixed(2) }}</p>
 
-      <!-- Кнопка добавления в корзину -->
-      <button
-        @click="handleAddToCart"
+      <Button
+        @on-click="handleAddToCart"
         :disabled="adding"
-        class="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-      >
-        {{ adding ? 'Adding...' : 'Add to Cart' }}
-      </button>
-
-      <!-- Уведомление об успешном добавлении -->
-      <transition name="fade">
-        <div v-if="showNotification" class="mt-2 text-sm text-green-600 text-center font-medium">
-          ✓ Added to cart!
-        </div>
-      </transition>
+        :text="adding ? 'Adding...' : 'Add to Cart'"
+        :is-show-transition="showNotification"
+        text-notification="✓ Added to cart!"
+      />
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { useCartStore } from '@/features/cart'
-
-// Props
-const props = defineProps({
-  product: {
-    type: Object,
-    required: true,
-  },
-})
-
-// State
-const cartStore = useCartStore()
-const adding = ref(false)
-const showNotification = ref(false)
-
-/**
- * Добавить товар в корзину
- */
-async function handleAddToCart() {
-  adding.value = true
-  const success = await cartStore.addToCart(props.product.id, 1)
-
-  if (success) {
-    showNotification.value = true
-    setTimeout(() => {
-      showNotification.value = false
-    }, 2000)
-  }
-
-  adding.value = false
-}
-
-/**
- * Обработка ошибки загрузки изображения
- */
-function handleImageError(event) {
-  event.target.src = 'https://via.placeholder.com/400x400?text=No+Image'
-}
-</script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
