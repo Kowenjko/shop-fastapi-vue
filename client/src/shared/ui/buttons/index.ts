@@ -1,4 +1,4 @@
-import Button from './Button.vue'
 import ButtonLink from './ButtonLink.vue'
+import ButtonCategory from './ButtonCategory.vue'
 
-export { Button, ButtonLink }
+export { ButtonLink, ButtonCategory }

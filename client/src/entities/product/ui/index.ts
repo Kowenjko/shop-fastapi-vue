@@ -1,4 +1,5 @@
-import CategoryFilter from './CategoryFilter.vue'
-import ProductCard from './ProductCard.vue'
+import LoadingProduct from './LoadingProduct.vue'
+import LoadingError from './LoadingError.vue'
+import ProductNoFound from './ProductNoFound.vue'
 
-export { CategoryFilter, ProductCard }
+export { LoadingProduct, LoadingError, ProductNoFound }

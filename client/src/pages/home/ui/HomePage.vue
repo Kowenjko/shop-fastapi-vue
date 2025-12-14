@@ -1,66 +1,38 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
-import { ProductCard, CategoryFilter, useProductsStore } from '@/entities/product'
-import { Modal } from '@/shared/ui'
+import { ProductCard, CategoryFilter, InfoFilter } from '@/widgets/product'
+import { useProductsStore } from '@/entities/product'
+import { LoadingProduct, LoadingError, ProductNoFound } from '@/entities/product'
+import { Title } from '@/shared/ui'
 
 const productsStore = useProductsStore()
 
 onMounted(async () => {
   await Promise.allSettled([productsStore.fetchProducts(), productsStore.fetchCategories()])
 })
-
-const modal = ref(true)
 </script>
 
 <template>
   <div class="min-h-screen bg-white">
     <div class="max-w-7xl mx-auto px-4 py-8">
-      <!-- Заголовок -->
-      <div class="mb-8">
-        <h1 class="text-4xl font-extrabold text-black mb-2">Product Catalog</h1>
-        <p class="text-gray-500">Discover our amazing products</p>
-      </div>
+      <Title title="Product Catalog" description="Discover our amazing products" />
 
       <div class="flex gap-8">
-        <!-- Боковая панель с фильтром -->
         <aside class="w-64 shrink-0">
           <CategoryFilter />
         </aside>
 
-        <!-- Основное содержимое -->
         <main class="grow">
-          <!-- Информация о фильтрации -->
-          <div class="mb-6 flex items-center justify-between">
-            <p class="text-gray-700">
-              <span class="font-bold">{{ productsStore.productsCount }}</span>
-              {{ productsStore.productsCount === 1 ? 'product' : 'products' }} found
-            </p>
+          <InfoFilter
+            :products-count="productsStore.productsCount"
+            :selected-category="productsStore.selectedCategory"
+            @clear-filter="productsStore.clearCategoryFilter"
+          />
 
-            <!-- Кнопка сброса фильтра -->
-            <button
-              v-if="productsStore.selectedCategory"
-              @click="productsStore.clearCategoryFilter"
-              class="text-sm text-gray-500 hover:text-black transition-colors font-medium"
-            >
-              Clear filter
-            </button>
-          </div>
+          <LoadingProduct v-if="productsStore.loading" />
+          <LoadingError v-else-if="productsStore.error" :error="productsStore.error" />
 
-          <!-- Состояние загрузки -->
-          <div v-if="productsStore.loading" class="text-center py-12">
-            <div
-              class="inline-block animate-spin rounded-none h-12 w-12 border-b-2 border-black"
-            ></div>
-            <p class="mt-4 text-gray-500">Loading products...</p>
-          </div>
-
-          <!-- Ошибка -->
-          <div v-else-if="productsStore.error" class="text-center py-12">
-            <p class="text-red-600 font-medium">{{ productsStore.error }}</p>
-          </div>
-
-          <!-- Список товаров -->
           <div
             v-else-if="productsStore.filteredProducts.length > 0"
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -72,34 +44,9 @@ const modal = ref(true)
             />
           </div>
 
-          <!-- Пустое состояние -->
-          <div v-else class="text-center py-12">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-16 w-16 mx-auto text-gray-400 mb-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-              />
-            </svg>
-            <p class="text-gray-500 text-lg font-medium">No products found</p>
-            <button
-              @click="productsStore.clearCategoryFilter"
-              class="mt-4 text-black hover:underline font-medium"
-            >
-              View all products
-            </button>
-          </div>
+          <ProductNoFound v-else @clear-filter="productsStore.clearCategoryFilter" />
         </main>
       </div>
     </div>
   </div>
-
-  <!-- <Modal v-model:open="modal"><span class="text-black">asfasdfsf</span></Modal> -->
 </template>
