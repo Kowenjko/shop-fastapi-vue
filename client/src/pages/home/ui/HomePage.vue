@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { ProductCard, CategoryFilter, InfoFilter } from '@/widgets/product'
 import { useProductsStore } from '@/entities/product'
 import { ProductNoFound } from '@/entities/product'
-import { LoadingProduct, LoadingError } from '@/shared/ui'
+import { Loading, LoadingError } from '@/shared/ui'
 import { Title } from '@/shared/ui'
 
 const productsStore = useProductsStore()
@@ -31,7 +31,7 @@ onMounted(async () => {
             @clear-filter="productsStore.clearCategoryFilter"
           />
 
-          <LoadingProduct v-if="productsStore.loading" />
+          <Loading v-if="productsStore.loading" />
           <LoadingError v-else-if="productsStore.error" :error="productsStore.error" />
 
           <div

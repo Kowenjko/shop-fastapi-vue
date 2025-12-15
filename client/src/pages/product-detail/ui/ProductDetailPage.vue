@@ -6,7 +6,7 @@ import { useProductsStore } from '@/entities/product'
 import { useCartStore } from '@/features/cart'
 
 import { ButtonBack } from '@/shared/ui'
-import { LoadingProduct, LoadingError } from '@/shared/ui'
+import { Loading, LoadingError } from '@/shared/ui'
 import { links } from '@/app/router'
 
 import type { ProductI } from '@/entities/product'
@@ -64,7 +64,7 @@ onMounted(async () => {
       <ButtonBack @click="router.push(links.HOME_LINK)" />
 
       <!-- Состояние загрузки -->
-      <LoadingProduct v-if="loading" />
+      <Loading v-if="loading" />
       <LoadingError v-else-if="error" :is-button-back="true" :error :to="links.HOME_LINK" />
 
       <!-- Детальная информация о товаре -->
