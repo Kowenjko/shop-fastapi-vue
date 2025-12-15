@@ -1,1 +1,1 @@
-export * from '@/pages/cart/config/router'
+export * from './router'

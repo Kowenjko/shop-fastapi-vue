@@ -3,7 +3,8 @@ import { onMounted } from 'vue'
 
 import { ProductCard, CategoryFilter, InfoFilter } from '@/widgets/product'
 import { useProductsStore } from '@/entities/product'
-import { LoadingProduct, LoadingError, ProductNoFound } from '@/entities/product'
+import { ProductNoFound } from '@/entities/product'
+import { LoadingProduct, LoadingError } from '@/shared/ui'
 import { Title } from '@/shared/ui'
 
 const productsStore = useProductsStore()

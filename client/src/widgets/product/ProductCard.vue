@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import { Button } from '@/shared/ui'
 import { useCartStore } from '@/features/cart'
-import type { ProductI } from '@/entities/product'
-
+import { handleImageError } from '@/shared/lib'
 import { links } from '@/app/router'
+
+import type { ProductI } from '@/entities/product'
 
 const { product } = defineProps<{ product: ProductI }>()
 
@@ -24,11 +25,6 @@ const handleAddToCart = async () => {
   }
 
   adding.value = false
-}
-
-const handleImageError = (event: Event) => {
-  const img = event.target as HTMLImageElement
-  img.src = 'https://via.placeholder.com/400x400?text=No+Image'
 }
 </script>
 
