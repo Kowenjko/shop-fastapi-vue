@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { AppFooter, AppHeader } from '@/widgets/app'
+import { ModalProceedCart, ModalClearCart } from '@/features/cart'
 </script>
 
 <template>
@@ -8,4 +9,6 @@ import { AppFooter, AppHeader } from '@/widgets/app'
     <RouterView />
     <AppFooter />
   </div>
+  <ModalProceedCart />
+  <ModalClearCart />
 </template>

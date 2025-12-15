@@ -1,26 +1,37 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 const {
   disabled = false,
   text,
   isShowTransition = false,
   textNotification = '',
+  variant = 'default',
 } = defineProps<{
   disabled?: boolean
   text: string
-  isShowTransition: boolean
+  isShowTransition?: boolean
   textNotification?: string
+  variant?: 'default' | 'destructive'
 }>()
 
 const emit = defineEmits<{ onClick: [] }>()
 
 const onClick = () => emit('onClick')
+
+const classes = computed(() => {
+  if (variant === 'destructive')
+    return 'bg-white border border-red-500 text-red-500 hover:bg-red-200'
+  return 'bg-black text-white hover:bg-gray-800'
+})
 </script>
 
 <template>
   <button
     @click="onClick"
     :disabled
-    class="w-full bg-black text-white py-3 px-4 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+    class="w-full py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+    :class="classes"
   >
     {{ text }}
   </button>

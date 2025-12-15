@@ -6,17 +6,18 @@ import { CartEmpty } from '@/features/cart'
 
 import { CartItem, CartActions, CartInfo } from '@/widgets/cart'
 import { Title, Loading } from '@/shared/ui'
+import { useModalStore } from '@/shared/stores'
 
 const cartStore = useCartStore()
+const modalStore = useModalStore()
 
 const handleCheckout = () => {
-  alert('Checkout functionality will be implemented soon!')
+  modalStore.modalProceedCart.show = true
 }
 
 const handleClearCart = () => {
-  if (confirm('Are you sure you want to clear your cart?')) {
-    cartStore.clearCart()
-  }
+  modalStore.modalClearCart.show = true
+  console.log('dfdfg')
 }
 
 onMounted(async () => {
