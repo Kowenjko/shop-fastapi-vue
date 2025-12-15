@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { useCartStore } from '@/features/cart'
 import { CartEmpty } from '@/features/cart'
 
-import { CartItem, CartActions, CartInfo, CartItemAction } from '@/widgets/cart'
+import { CartItem, CartActions, CartInfo } from '@/widgets/cart'
 import { Title, Loading } from '@/shared/ui'
 
 const cartStore = useCartStore()
