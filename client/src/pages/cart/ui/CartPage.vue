@@ -17,7 +17,6 @@ const handleCheckout = () => {
 
 const handleClearCart = () => {
   modalStore.modalClearCart.show = true
-  console.log('dfdfg')
 }
 
 onMounted(async () => {
