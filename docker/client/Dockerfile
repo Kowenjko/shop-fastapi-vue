@@ -4,7 +4,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Копируем package*.json для кэширования слоёв
-COPY client/package*.json ./ 
+COPY client/package.json client/yarn.lock ./ 
 
 # Устанавливаем зависимости
 RUN yarn install --frozen-lockfile --network-timeout 100000

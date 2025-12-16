@@ -2,9 +2,20 @@ SHELL := /bin/bash
 
 DEV_COMPOSE = docker compose
 API = $(DEV_COMPOSE) exec api
+CLIENT = $(DEV_COMPOSE) exec client
 
 CLIENT_URL = shop.local
 API_URL = api.shop.local
+
+# --------------------------
+# CLIENT COMMAND
+# --------------------------
+c.install:
+	@if [ -z "$(name)" ]; then \
+		echo "⚠️ Usage: make revision name=\"description\""; \
+		exit 1; \
+	fi
+	$(CLIENT) yarn add $(name) 
 
 # --------------------------
 # DEV COMMANDS

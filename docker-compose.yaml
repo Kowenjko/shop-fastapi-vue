@@ -51,8 +51,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./client:/app              # синхронизируем код фронта
-      - /app/node_modules         # чтобы node_modules были внутри контейнера
+      - ./client:/app              # синхронизируем код фронта              
     depends_on:
       - api
 
