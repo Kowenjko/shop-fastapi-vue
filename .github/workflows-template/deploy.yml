@@ -1,0 +1,102 @@
+# name: CI/CD
+
+# on:
+#   push:
+#     branches: [ main ]
+
+# env:
+#   REGISTRY: ghcr.io/Kowenjko
+#   API_IMAGE: ${{ env.REGISTRY }}/api
+#   CLIENT_IMAGE: ${{ env.REGISTRY }}/client
+
+# jobs:
+
+#   # -----------------------
+#   # Backend lint + tests
+#   # -----------------------
+#   api-tests:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+
+#       - name: Install Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: "3.12"
+
+#       - name: Install API dependencies
+#         run: |
+#           cd api
+#           pip install uv
+#           uv sync
+
+#       - name: Run tests
+#         run: |
+#           cd api
+#           uv run pytest
+
+#   # -----------------------
+#   # Frontend build check
+#   # -----------------------
+#   client-tests:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+
+#       - name: Install Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: "20"
+
+#       - name: Install dependencies & build
+#         run: |
+#           cd client
+#           npm ci
+#           npm run build
+
+#   # -----------------------
+#   # Build & Push Docker Images
+#   # -----------------------
+#   docker:
+#     needs: [api-tests, client-tests]
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v4
+
+#       - name: Log in to GHCR
+#         uses: docker/login-action@v3
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GITHUB_TOKEN }}
+
+#       - name: Build & push API
+#         run: |
+#           docker build -t $API_IMAGE:latest -f docker/api/Dockerfile .
+#           docker push $API_IMAGE:latest
+
+#       - name: Build & push Client
+#         run: |
+#           docker build -t $CLIENT_IMAGE:latest -f docker/client/Dockerfile .
+#           docker push $CLIENT_IMAGE:latest
+
+#   # -----------------------
+#   # Deploy
+#   # -----------------------
+#   deploy:
+#     needs: docker
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: SSH deploy
+#         uses: appleboy/ssh-action@v1.0.3
+#         with:
+#           host: ${{ secrets.DEPLOY_HOST }}
+#           username: ${{ secrets.DEPLOY_USER }}
+#           key: ${{ secrets.DEPLOY_KEY }}
+#           script: |
+#             cd /var/www/project
+#             docker compose pull
+#             docker compose up -d --remove-orphans
+#             docker system prune -f
